@@ -6,17 +6,16 @@ using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
-   
+
     //Variables
     Vector3 moveDir = Vector3.zero;
 
     float speed = 7.0F;
-    float rotateSpeed = 200f;
-    float rot = 0f;
     float gravity = 8;
 
     public Animator animator;
     public CharacterController controller;
+    public LayerMask groundMask;
 
     private void Start()
     {
@@ -25,37 +24,45 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (controller.isGrounded) {
-            if (Input.GetKey(KeyCode.W))
-            {
-                animator.SetBool("isRunning", true);
-                moveDir = new Vector3(0, 0, 1);
-                moveDir *= speed;
-                moveDir = transform.TransformDirection(moveDir);
-            }
-            if (Input.GetKeyUp(KeyCode.W))
-            {
-                moveDir = new Vector3(0, 0, 0);
-                animator.SetBool("isRunning", false);
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                
-                moveDir = new Vector3(0, 0, -1);
-                moveDir *= speed;
-                moveDir = transform.TransformDirection(moveDir);
-            }
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-               
-                moveDir = new Vector3(0, 0, 0);
-          
-            }
-            rot += Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime;
-            transform.eulerAngles = new Vector3(0, rot, 0);
+        MoveCharacter();
+        RotateCharacter();
+        Shoot();
+    }
+
+    private void MoveCharacter()
+    {
+        controller.Move(moveDir * Time.deltaTime);
+        //if (controller.isGrounded)
+        {
+            moveDir = new Vector3(0, 0, Input.GetAxis("Vertical"));
+            moveDir *= speed;
+            moveDir = transform.TransformDirection(moveDir);
+            animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+            //animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         }
         moveDir.y -= gravity * Time.deltaTime;
-        controller.Move(moveDir * Time.deltaTime);
-        
     }
+
+    private void RotateCharacter()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, float.MaxValue, groundMask))
+        {
+            transform.LookAt(hitInfo.point);
+        }
+    }
+
+    private void Shoot()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            animator.SetBool("isShooting", true);
+        }
+        else
+        {
+            animator.SetBool("isShooting", false);
+        }
+    }
+
+
 }
