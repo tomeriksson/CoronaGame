@@ -3,29 +3,30 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
 
-    Transform player;
-    UnityEngine.AI.NavMeshAgent agent;
+    GameObject player;
+    NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
     {
         if(GameObject.FindGameObjectWithTag("Player").activeInHierarchy)
         {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            player = GameObject.FindGameObjectWithTag("Player");
         }
 
-        agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        agent = gameObject.GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        agent.transform.LookAt(player);
-        agent.destination = player.position;
-        print(player.position);
+        agent.transform.LookAt(player.transform);
+        agent.destination = player.transform.position;
+        print(player.transform.position);
     }
 }
