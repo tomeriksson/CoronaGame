@@ -62,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isShooting", false);
         }
+
+        
     }
 
 

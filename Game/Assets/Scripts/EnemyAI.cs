@@ -27,6 +27,5 @@ public class EnemyAI : MonoBehaviour
     {
         agent.transform.LookAt(player.transform);
         agent.destination = player.transform.position;
-        print(player.transform.position);
     }
 }
