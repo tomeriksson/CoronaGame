@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Spawning : MonoBehaviour
@@ -11,26 +12,29 @@ public class Spawning : MonoBehaviour
     [SerializeField]
     public float spawnDelay;
     public int enemyCounter;
-    public int enemiesOnField;
     private int enemiesSpawnedThisRound = 0;
-    /*
-        private int newRoundTime = 10;
-        private int newRoundDelay = 5;
-        */
+   
+    private float newRoundTime;
+    private float newRoundDelay = 10;
+    private bool invokable = true;
+   
+
     // Update is called once per frame
     void Update()
     {
         if (ShouldSpawn())
         {
             Spawn();
-            enemiesSpawnedThisRound++;
         }
+
+        NewRound();
     }
 
     private void Spawn()
     {
         spawnTime = Time.time + spawnDelay;
         Instantiate(coronaPrefab, transform.position, transform.rotation, transform);
+        enemiesSpawnedThisRound++;
     }
 
     private bool ShouldSpawn()
@@ -38,13 +42,16 @@ public class Spawning : MonoBehaviour
         return Time.time >= spawnTime && enemiesSpawnedThisRound < enemyCounter;
     }
 
-    private void NewRound()
-    {
-
+   private void NewRound() {
+        if (transform.childCount == 0 && invokable) {
+            Invoke("StartNewRound", newRoundDelay);
+            invokable = false;
+        }
+    }
+    private void StartNewRound() {
+        enemiesSpawnedThisRound = 0;
+        enemyCounter = (int)Math.Round(enemyCounter * 1.25, 0);
+        invokable = true;
     }
 
-    private bool ShouldNewRound()
-    {
-        return Time.time >= spawnTime && enemiesSpawnedThisRound < enemyCounter;
-    }
 }
