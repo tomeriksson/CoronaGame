@@ -1600,7 +1600,7 @@ MonoBehaviour:
   coronaPrefab: {fileID: 1239974131898139435, guid: 760f0993dbba6ae49abc32bfdf8d0900,
     type: 3}
   spawnDelay: 0.03
-  enemyCounter: 20
+  enemyCounter: 21
   enemiesOnField: 0
 --- !u!65 &1728629215
 BoxCollider:
