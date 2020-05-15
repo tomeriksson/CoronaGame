@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Runtime;
+using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,7 +12,9 @@ public class EnemyAI : MonoBehaviour
 {
 
     GameObject player;
-    NavMeshAgent agent;
+    //NavMeshAgent agent;
+    public Rigidbody rb;
+    private Vector3 HIGHT_OFFSET = new Vector3(0, 0.67f, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -18,14 +23,16 @@ public class EnemyAI : MonoBehaviour
         {
             player = GameObject.FindGameObjectWithTag("Player");
         }
-
-        agent = gameObject.GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        agent.transform.LookAt(player.transform);
-        agent.destination = player.transform.position;
+        transform.LookAt(player.transform.position + HIGHT_OFFSET);
+    }
+
+    void FixedUpdate()
+    {
+        rb.AddForce(transform.forward * 0.5f + HIGHT_OFFSET, ForceMode.VelocityChange);
     }
 }
