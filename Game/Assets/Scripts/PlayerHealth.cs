@@ -10,6 +10,9 @@ public class PlayerHealth : MonoBehaviour
     public Slider slider;
     public Gradient gradient;
     public Image fill;
+    private float damageCooldown = 1f;
+    private float damageTime = 0;
+    public float attackDamage;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,16 +46,17 @@ public class PlayerHealth : MonoBehaviour
     void Die(){
         Destroy(gameObject);
     }
-/*    void OnCollisionEnter(Collision col){
-        if(col.gameObject.tag == "Enemy"){
-            Damage(5f);
 
-      }
-    }
-    */
-    void OnControllerColliderHit(ControllerColliderHit hit){
-        if(hit.gameObject.tag == "Enemy"){
-            Damage(5f);
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.tag == "Enemy" && ShouldDamage())
+        {
+            Damage(attackDamage);
+            damageTime = Time.time + damageCooldown;
         }
+    }
+        private bool ShouldDamage()
+    {
+        return Time.time >= damageCooldown;
     }
 }
