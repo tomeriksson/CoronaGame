@@ -18,7 +18,17 @@ public class Spawning : MonoBehaviour
     private float newRoundDelay = 10;
     private bool invokable = true;
 
+    public Transform spawnNE;
+    public Transform spawnNW;
+    public Transform spawnSE;
+    public Transform spawnSW;
+    private System.Random rand = new System.Random();
+    private Transform enemiesList;
 
+    private void Start()
+    {
+        enemiesList = transform.GetChild(4);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -33,7 +43,21 @@ public class Spawning : MonoBehaviour
     private void Spawn()
     {
         spawnTime = Time.time + spawnDelay;
-        Instantiate(coronaPrefab, transform.position, transform.rotation, transform);
+        switch (rand.Next(4))
+        {
+            case 0:
+                Instantiate(coronaPrefab, spawnNE.position, spawnNE.rotation, enemiesList);
+                break;
+            case 1:
+                Instantiate(coronaPrefab, spawnNW.position, spawnNW.rotation, enemiesList);
+                break;
+            case 2:
+                Instantiate(coronaPrefab, spawnSE.position, spawnSE.rotation, enemiesList);
+                break;
+            case 3:
+                Instantiate(coronaPrefab, spawnSW.position, spawnSW.rotation, enemiesList);
+                break;
+        }
         enemiesSpawnedThisRound++;
     }
 
@@ -44,7 +68,7 @@ public class Spawning : MonoBehaviour
 
     private void NewRound()
     {
-        if (transform.childCount == 0 && invokable)
+        if (enemiesList.childCount == 0 && invokable)
         {
             Invoke("StartNewRound", newRoundDelay);
             invokable = false;
@@ -53,7 +77,7 @@ public class Spawning : MonoBehaviour
     private void StartNewRound()
     {
         enemiesSpawnedThisRound = 0;
-        enemyCounter = (int)Math.Round(enemyCounter * 1.25, 0);
+        enemyCounter = (int)Math.Round(enemyCounter * 1.25, 0) +1;
         invokable = true;
     }
 
