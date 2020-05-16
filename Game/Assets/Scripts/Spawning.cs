@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawning : MonoBehaviour
 {
@@ -24,10 +25,13 @@ public class Spawning : MonoBehaviour
     public Transform spawnSW;
     private System.Random rand = new System.Random();
     private Transform enemiesList;
+    public Text score;
+    private ScoreCounting counter;
 
     private void Start()
     {
         enemiesList = transform.GetChild(4);
+        counter = score.GetComponent<ScoreCounting>();
     }
     // Update is called once per frame
     void Update()
@@ -71,6 +75,7 @@ public class Spawning : MonoBehaviour
         if (enemiesList.childCount == 0 && invokable)
         {
             Invoke("StartNewRound", newRoundDelay);
+            counter.AddToScore();
             invokable = false;
         }
     }
