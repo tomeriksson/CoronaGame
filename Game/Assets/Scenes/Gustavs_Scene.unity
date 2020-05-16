@@ -2595,7 +2595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f128fc3bd89024a95e13a8455b5104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coronaPrefab: {fileID: 1239974131898139435, guid: 760f0993dbba6ae49abc32bfdf8d0900,
+  coronaPrefab: {fileID: 1190601789873990, guid: a8145fd98e506094980d05080bde9072,
     type: 3}
   spawnDelay: 0
   enemyCounter: 7
