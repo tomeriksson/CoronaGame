@@ -657,6 +657,8 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 764264320}
   attackDamage: 2
+  animator: {fileID: 261800373}
+  controller: {fileID: 261800369}
 --- !u!136 &261800377
 CapsuleCollider:
   m_ObjectHideFlags: 0

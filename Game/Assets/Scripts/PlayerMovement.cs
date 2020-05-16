@@ -24,9 +24,12 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        MoveCharacter();
-        RotateCharacter();
-        Shoot();
+        if (controller.enabled == true) {
+            MoveCharacter();
+            RotateCharacter();
+            Shoot();
+        }
+        
     }
 
     private void MoveCharacter()

@@ -13,6 +13,9 @@ public class PlayerHealth : MonoBehaviour
     private float damageCooldown = 1f;
     private float damageTime = 0;
     public float attackDamage;
+    public Animator animator;
+    private bool isAlive = true;
+    public CharacterController controller;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +28,14 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Heal(0.05f);
-        slider.value=Health;
-        fill.color=gradient.Evaluate(slider.normalizedValue);
+        if (isAlive)
+        {
+            Heal(0.05f);
+        }
+            slider.value = Health;
+            fill.color = gradient.Evaluate(slider.normalizedValue);
+       
+        
     }
 
     void Damage(float amount)
@@ -36,6 +44,7 @@ public class PlayerHealth : MonoBehaviour
         fill.color=gradient.Evaluate(slider.normalizedValue);
         if(Health<=0){
             Die();
+            isAlive = false;
         }
     }
     void Heal(float amount){
@@ -44,7 +53,9 @@ public class PlayerHealth : MonoBehaviour
         }
     }
     void Die(){
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        animator.SetBool("isDead", true);
+        controller.enabled = false;
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
