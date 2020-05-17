@@ -12,7 +12,6 @@ public class PlayerHealth : MonoBehaviour
     public Image fill;
     private float damageCooldown = 1f;
     private float damageTime = 0;
-    public float attackDamage;
     public Animator animator;
     private bool isAlive = true;
     public CharacterController controller;
@@ -38,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
         
     }
 
-    void Damage(float amount)
+    public void Damage(float amount)
     {
         Health-=amount;
         fill.color=gradient.Evaluate(slider.normalizedValue);
@@ -58,14 +57,14 @@ public class PlayerHealth : MonoBehaviour
         controller.enabled = false;
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.gameObject.tag == "Enemy" && ShouldDamage())
-        {
-            Damage(attackDamage);
-            damageTime = Time.time + damageCooldown;
-        }
-    }
+    //void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    if (hit.gameObject.tag == "Enemy" && ShouldDamage())
+    //    {
+    //        Damage(attackDamage);
+    //        damageTime = Time.time + damageCooldown;
+    //    }
+    //}
         private bool ShouldDamage()
     {
         return Time.time >= damageCooldown;
