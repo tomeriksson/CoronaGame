@@ -11,7 +11,6 @@ public class PlayerHealth : MonoBehaviour
     public Gradient gradient;
     public Image fill;
     private float damageCooldown = 1f;
-    private float damageTime = 0;
     public Animator animator;
     private bool isAlive = true;
     public CharacterController controller;
