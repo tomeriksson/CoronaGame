@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -54,6 +55,15 @@ public class PlayerHealth : MonoBehaviour
         //Destroy(gameObject);
         animator.SetBool("isDead", true);
         controller.enabled = false;
+        StartCoroutine(waiter());
+    }
+
+    IEnumerator waiter()
+    {
+        //Wait for 4 seconds
+        yield return new WaitForSeconds(4);
+        // Change Scene to DeathScreen
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     //void OnControllerColliderHit(ControllerColliderHit hit)
@@ -64,7 +74,7 @@ public class PlayerHealth : MonoBehaviour
     //        damageTime = Time.time + damageCooldown;
     //    }
     //}
-        private bool ShouldDamage()
+    private bool ShouldDamage()
     {
         return Time.time >= damageCooldown;
     }

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Gustavs_Scene.unity
     guid: be7a9ff9fd7dcba45877128e66580665
+  - enabled: 1
+    path: Assets/Scenes/DeathScreen.unity
+    guid: 1b0c4e021ed7cea44b025c70db34f3b8
   m_configObjects: {}
